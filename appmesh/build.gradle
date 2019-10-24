@@ -21,6 +21,27 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    // 定义jar包名称
+    def SDK_BASENAME = "appmesh";
+    // 定义jar包版本
+    def SDK_VERSION = "";
+
+    def sdkDestinationPath = "build/outputs/jar/";
+    def zipFile = file('build/intermediates/packaged-classes/release/classes.jar')
+    task deleteBuild(type: Delete) {
+        delete sdkDestinationPath + SDK_BASENAME + SDK_VERSION + ".jar"
+    }
+
+// 这个task  后面的makeJar就相当于一个方法然后下面的makeJar.dependsOn就相当于调用这个方法参数就是上面的deleteBuild
+    task makeJar(type: Jar) {
+        from zipTree(zipFile)
+        from fileTree(dir: 'src/main/java/iot.espressif.esp32/') // 打包assets目录下的所有文件
+        //（我们只关心classes.jar这个文件）
+        //include('classes.jar')
+        baseName = SDK_BASENAME + SDK_VERSION
+        destinationDir = file(sdkDestinationPath)
+    }
+    makeJar.dependsOn(deleteBuild, build)
 }
 
 dependencies {

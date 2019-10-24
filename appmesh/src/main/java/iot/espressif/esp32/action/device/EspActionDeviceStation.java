@@ -341,7 +341,7 @@ public class EspActionDeviceStation implements IEspActionDeviceStation {
 
                     try {
                         byte[] sendData = UDP_SEND_DATA.getBytes();
-                        InetAddress address = NetUtil.getBroadcastAddress(EspApplication.getEspApplication());
+                        InetAddress address = NetUtil.getBroadcastAddress(EspApplication.getEspApplication().getApplicationContext());
                         DatagramPacket sendPk = new DatagramPacket(sendData, sendData.length, address, UDP_DEVICE_PORT);
                         datagramSocket.send(sendPk);
                         mLog.d("UDP send " + UDP_SEND_DATA);

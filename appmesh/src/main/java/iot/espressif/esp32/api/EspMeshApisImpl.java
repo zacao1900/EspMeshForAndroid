@@ -1,10 +1,10 @@
 package iot.espressif.esp32.api;
 
 import android.bluetooth.BluetoothDevice;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import java.io.File;
 import java.util.Collection;

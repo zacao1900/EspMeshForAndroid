@@ -4,7 +4,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.content.Context;
 
-import androidx.annotation.NonNull;
+import android.support.annotation.NonNull;
 
 import java.util.Collection;
 import java.util.Hashtable;

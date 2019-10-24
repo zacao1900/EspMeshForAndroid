@@ -4,7 +4,7 @@ import android.bluetooth.le.ScanRecord;
 import android.bluetooth.le.ScanResult;
 import android.os.Build;
 
-import androidx.annotation.RequiresApi;
+import android.support.annotation.RequiresApi;
 
 public class MeshUtils {
     /*

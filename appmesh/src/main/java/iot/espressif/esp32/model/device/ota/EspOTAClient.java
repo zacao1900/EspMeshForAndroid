@@ -2,7 +2,7 @@ package iot.espressif.esp32.model.device.ota;
 
 import android.os.Handler;
 
-import androidx.annotation.Nullable;
+import android.support.annotation.Nullable;
 
 import java.io.File;
 import java.net.MalformedURLException;

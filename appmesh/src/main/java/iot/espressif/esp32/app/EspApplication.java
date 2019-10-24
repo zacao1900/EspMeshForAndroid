@@ -2,12 +2,13 @@ package iot.espressif.esp32.app;
 
 import android.app.Application;
 import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Environment;
+import android.support.v4.content.LocalBroadcastManager;
 
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import java.util.HashMap;
 import java.util.Random;
@@ -15,8 +16,9 @@ import java.util.Random;
 import iot.espressif.esp32.db.box.MeshObjectBox;
 import libs.espressif.utils.RandomUtil;
 
-public class EspApplication extends Application {
+public class EspApplication {
     private static EspApplication instance;
+    private static Application applicationInstance;
     private final Object mCacheLock = new Object();
     private HashMap<String, Object> mCacheMap;
     private boolean mSupportBLE;
@@ -24,33 +26,21 @@ public class EspApplication extends Application {
 
     public static EspApplication getEspApplication() {
         if (instance == null) {
-            throw new NullPointerException("EspApplication instance is null, please register in AndroidManifest.xml first");
+            instance = new EspApplication();
         }
         return instance;
     }
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-
-        instance = this;
-        init();
-    }
-
-    @Override
-    public void onTerminate() {
-        super.onTerminate();
-
-        release();
-    }
-
     private void init() {
-        mBroadcastManager = LocalBroadcastManager.getInstance(this);
+        if (instance == null) {
+            instance = new EspApplication();
+        }
+        mBroadcastManager = LocalBroadcastManager.getInstance(applicationInstance);
         mCacheMap = new HashMap<>();
 
-        mSupportBLE = getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE);
+        mSupportBLE = applicationInstance.getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE);
 
-        MeshObjectBox.getInstance().init(this);
+        MeshObjectBox.getInstance().init(applicationInstance);
     }
 
     private void release() {
@@ -133,4 +123,12 @@ public class EspApplication extends Application {
     public void unregisterLocalReceiver(BroadcastReceiver receiver) {
         mBroadcastManager.unregisterReceiver(receiver);
     }
+    public void setApplication(Application application) {
+        applicationInstance = application;
+        this.init();
+    }
+    public Context getApplicationContext() {
+        return applicationInstance;
+    }
+
 }

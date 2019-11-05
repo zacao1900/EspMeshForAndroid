@@ -69,7 +69,7 @@ public class DevicePropertiesCache {
         return result;
     }
 
-    private EspDeviceCharacteristic getCharcteristic(int cid, String name, String format, int perms, Number min, Number max, Number step) {
+    private EspDeviceCharacteristic getCharcteristic(String cid, String name, String format, int perms, Number min, Number max, Number step) {
         EspDeviceCharacteristic characteristic = EspDeviceCharacteristic.newInstance(format);
         assert characteristic != null;
         characteristic.setCid(cid);
@@ -85,23 +85,23 @@ public class DevicePropertiesCache {
     private PropertiesModel getTid1() {
         List<EspDeviceCharacteristic> characteristics = new LinkedList<>();
 
-        EspDeviceCharacteristic characteristic = getCharcteristic(0, "on", "int", 7, 0, 1, 1);
-        characteristics.add(characteristic);
-
-        characteristic = getCharcteristic(1, "hue", "int", 7, 0, 360, 1);
-        characteristics.add(characteristic);
-
-        characteristic = getCharcteristic(2, "saturation", "int", 7, 0, 100, 1);
-        characteristics.add(characteristic);
-
-        characteristic = getCharcteristic(3, "value", "int", 7, 0, 100, 1);
-        characteristics.add(characteristic);
-
-        characteristic = getCharcteristic(4, "color_temperature", "int", 7, 0, 100, 1);
-        characteristics.add(characteristic);
-
-        characteristic = getCharcteristic(5, "brightness", "int", 0, 100, 1, 1);
-        characteristics.add(characteristic);
+//        EspDeviceCharacteristic characteristic = getCharcteristic(0, "on", "int", 7, 0, 1, 1);
+//        characteristics.add(characteristic);
+//
+//        characteristic = getCharcteristic(1, "hue", "int", 7, 0, 360, 1);
+//        characteristics.add(characteristic);
+//
+//        characteristic = getCharcteristic(2, "saturation", "int", 7, 0, 100, 1);
+//        characteristics.add(characteristic);
+//
+//        characteristic = getCharcteristic(3, "value", "int", 7, 0, 100, 1);
+//        characteristics.add(characteristic);
+//
+//        characteristic = getCharcteristic(4, "color_temperature", "int", 7, 0, 100, 1);
+//        characteristics.add(characteristic);
+//
+//        characteristic = getCharcteristic(5, "brightness", "int", 0, 100, 1, 1);
+//        characteristics.add(characteristic);
 
         PropertiesModel result = new PropertiesModel();
         result.tid = 1;
@@ -112,41 +112,41 @@ public class DevicePropertiesCache {
     private PropertiesModel getTid22() {
         List<EspDeviceCharacteristic> characteristics = new LinkedList<>();
 
-        EspDeviceCharacteristic characteristic = getCharcteristic(1, "lux", "int", 1, 0, 99999, 1);
-        characteristics.add(characteristic);
-
-        characteristic = getCharcteristic(2, "temp", "int", 1, -10000, 10000, 1);
-        characteristics.add(characteristic);
-
-        characteristic = getCharcteristic(3, "humidity", "int", 1, -10000, 10000, 1);
-        characteristics.add(characteristic);
-
-        characteristic = getCharcteristic(4, "pir", "int", 1, 0, 1, 1);
-        characteristics.add(characteristic);
-
-        characteristic = getCharcteristic(5, "lightState", "int", 7, 0, 1, 1);
-        characteristics.add(characteristic);
-
-        characteristic = getCharcteristic(9, "pirThre", "int", 7, 0, 200, 1);
-        characteristics.add(characteristic);
-
-        characteristic = getCharcteristic(10, "pirAlarmWidth", "int", 7, 0, 30, 1);
-        characteristics.add(characteristic);
-
-        characteristic = getCharcteristic(11, "pirRealBit", "int", 7, 0, 30, 1);
-        characteristics.add(characteristic);
-
-        characteristic = getCharcteristic(12, "lightDelay", "int", 7, 1, 999, 1);
-        characteristics.add(characteristic);
-
-        characteristic = getCharcteristic(13, "luxThre", "int", 7, 1, 999, 1);
-        characteristics.add(characteristic);
-
-        characteristic = getCharcteristic(14, "tempThre", "int", 7, 1, 999, 1);
-        characteristics.add(characteristic);
-
-        characteristic = getCharcteristic(15, "humThre", "int", 7, 1, 999, 1);
-        characteristics.add(characteristic);
+//        EspDeviceCharacteristic characteristic = getCharcteristic(1, "lux", "int", 1, 0, 99999, 1);
+//        characteristics.add(characteristic);
+//
+//        characteristic = getCharcteristic(2, "temp", "int", 1, -10000, 10000, 1);
+//        characteristics.add(characteristic);
+//
+//        characteristic = getCharcteristic(3, "humidity", "int", 1, -10000, 10000, 1);
+//        characteristics.add(characteristic);
+//
+//        characteristic = getCharcteristic(4, "pir", "int", 1, 0, 1, 1);
+//        characteristics.add(characteristic);
+//
+//        characteristic = getCharcteristic(5, "lightState", "int", 7, 0, 1, 1);
+//        characteristics.add(characteristic);
+//
+//        characteristic = getCharcteristic(9, "pirThre", "int", 7, 0, 200, 1);
+//        characteristics.add(characteristic);
+//
+//        characteristic = getCharcteristic(10, "pirAlarmWidth", "int", 7, 0, 30, 1);
+//        characteristics.add(characteristic);
+//
+//        characteristic = getCharcteristic(11, "pirRealBit", "int", 7, 0, 30, 1);
+//        characteristics.add(characteristic);
+//
+//        characteristic = getCharcteristic(12, "lightDelay", "int", 7, 1, 999, 1);
+//        characteristics.add(characteristic);
+//
+//        characteristic = getCharcteristic(13, "luxThre", "int", 7, 1, 999, 1);
+//        characteristics.add(characteristic);
+//
+//        characteristic = getCharcteristic(14, "tempThre", "int", 7, 1, 999, 1);
+//        characteristics.add(characteristic);
+//
+//        characteristic = getCharcteristic(15, "humThre", "int", 7, 1, 999, 1);
+//        characteristics.add(characteristic);
 
         PropertiesModel result = new PropertiesModel();
         result.tid = 22;
@@ -156,35 +156,35 @@ public class DevicePropertiesCache {
 
     private PropertiesModel getTid23() {
         List<EspDeviceCharacteristic> characteristics = new LinkedList<>();
-        EspDeviceCharacteristic characteristic = getCharcteristic(0, "mean_max", "double", 3, 0, 40, 0.01);
-        characteristics.add(characteristic);
-
-        characteristic = getCharcteristic(1, "mean_min", "double", 3, 0, 40, 0.01);
-        characteristics.add(characteristic);
-
-        characteristic = getCharcteristic(2, "std_max", "double", 3, 0, 100, 0.01);
-        characteristics.add(characteristic);
-
-        characteristic = getCharcteristic(3, "std_min", "double", 3, 0, 100, 0.01);
-        characteristics.add(characteristic);
-
-        characteristic = getCharcteristic(4, "mode_w0", "double", 3, 0, 100, 0.01);
-        characteristics.add(characteristic);
-
-        characteristic = getCharcteristic(5, "mode_w1", "double", 3, 0, 100, 0.01);
-        characteristics.add(characteristic);
-
-        characteristic = getCharcteristic(6, "mode_intercept", "double", 3, -100, 100, 0.01);
-        characteristics.add(characteristic);
-
-        characteristic = getCharcteristic(7, "num_count", "int", 3, 0, 600, 1);
-        characteristics.add(characteristic);
-
-        characteristic = getCharcteristic(8, "pir_data", "int", 3, 0, 1, 1);
-        characteristics.add(characteristic);
-
-        characteristic = getCharcteristic(9, "pudate_time", "int", 3, 0, 600, 1);
-        characteristics.add(characteristic);
+//        EspDeviceCharacteristic characteristic = getCharcteristic(0, "mean_max", "double", 3, 0, 40, 0.01);
+//        characteristics.add(characteristic);
+//
+//        characteristic = getCharcteristic(1, "mean_min", "double", 3, 0, 40, 0.01);
+//        characteristics.add(characteristic);
+//
+//        characteristic = getCharcteristic(2, "std_max", "double", 3, 0, 100, 0.01);
+//        characteristics.add(characteristic);
+//
+//        characteristic = getCharcteristic(3, "std_min", "double", 3, 0, 100, 0.01);
+//        characteristics.add(characteristic);
+//
+//        characteristic = getCharcteristic(4, "mode_w0", "double", 3, 0, 100, 0.01);
+//        characteristics.add(characteristic);
+//
+//        characteristic = getCharcteristic(5, "mode_w1", "double", 3, 0, 100, 0.01);
+//        characteristics.add(characteristic);
+//
+//        characteristic = getCharcteristic(6, "mode_intercept", "double", 3, -100, 100, 0.01);
+//        characteristics.add(characteristic);
+//
+//        characteristic = getCharcteristic(7, "num_count", "int", 3, 0, 600, 1);
+//        characteristics.add(characteristic);
+//
+//        characteristic = getCharcteristic(8, "pir_data", "int", 3, 0, 1, 1);
+//        characteristics.add(characteristic);
+//
+//        characteristic = getCharcteristic(9, "pudate_time", "int", 3, 0, 600, 1);
+//        characteristics.add(characteristic);
 
         PropertiesModel result = new PropertiesModel();
         result.tid = 23;

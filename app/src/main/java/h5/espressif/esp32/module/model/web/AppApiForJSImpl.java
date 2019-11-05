@@ -720,12 +720,12 @@ class AppApiForJSImpl implements EspWebConstants {
     }
 
     String loadDevice(String prefName, String mac) {
-        SharedPreferences sp = mApp.getSharedPreferences(prefName, Context.MODE_PRIVATE);
+        SharedPreferences sp = mApp.getApplicationContext().getSharedPreferences(prefName, Context.MODE_PRIVATE);
         return sp.getString(mac, null);
     }
 
     String loadDevices(String prefName) {
-        SharedPreferences sp = mApp.getSharedPreferences(prefName, Context.MODE_PRIVATE);
+        SharedPreferences sp = mApp.getApplicationContext().getSharedPreferences(prefName, Context.MODE_PRIVATE);
         Map<String, ?> map = sp.getAll();
         try {
             JSONArray array = new JSONArray();
@@ -744,7 +744,7 @@ class AppApiForJSImpl implements EspWebConstants {
     }
 
     boolean saveDevice(String prefName, String info) {
-        SharedPreferences sp = mApp.getSharedPreferences(prefName, Context.MODE_PRIVATE);
+        SharedPreferences sp = mApp.getApplicationContext().getSharedPreferences(prefName, Context.MODE_PRIVATE);
         try {
             JSONObject json = new JSONObject(info);
             String mac = json.getString(KEY_MAC);
@@ -757,7 +757,7 @@ class AppApiForJSImpl implements EspWebConstants {
     }
 
     boolean saveDevices(String prefName, String info) {
-        SharedPreferences sp = mApp.getSharedPreferences(prefName, Context.MODE_PRIVATE);
+        SharedPreferences sp = mApp.getApplicationContext().getSharedPreferences(prefName, Context.MODE_PRIVATE);
         try {
             SharedPreferences.Editor editor = sp.edit();
             JSONArray array = new JSONArray(info);
@@ -775,12 +775,12 @@ class AppApiForJSImpl implements EspWebConstants {
     }
 
     void removeDevice(String prefName, String mac) {
-        SharedPreferences sp = mApp.getSharedPreferences(prefName, Context.MODE_PRIVATE);
+        SharedPreferences sp = mApp.getApplicationContext().getSharedPreferences(prefName, Context.MODE_PRIVATE);
         sp.edit().remove(mac).apply();
     }
 
     boolean removeDevices(String prefName, String macs) {
-        SharedPreferences sp = mApp.getSharedPreferences(prefName, Context.MODE_PRIVATE);
+        SharedPreferences sp = mApp.getApplicationContext().getSharedPreferences(prefName, Context.MODE_PRIVATE);
         try {
             SharedPreferences.Editor editor = sp.edit();
             JSONArray array = new JSONArray(macs);
@@ -797,7 +797,7 @@ class AppApiForJSImpl implements EspWebConstants {
     }
 
     void removeAllDevices(String prefName) {
-        SharedPreferences sp = mApp.getSharedPreferences(prefName, Context.MODE_PRIVATE);
+        SharedPreferences sp = mApp.getApplicationContext().getSharedPreferences(prefName, Context.MODE_PRIVATE);
         sp.edit().clear().apply();
     }
 
@@ -807,7 +807,7 @@ class AppApiForJSImpl implements EspWebConstants {
             int row = json.getInt(KEY_ROW);
             int column = json.getInt(KEY_COLUMN);
 
-            SharedPreferences sp = mApp.getSharedPreferences(PREF_DEVICE_TAB, Context.MODE_PRIVATE);
+            SharedPreferences sp = mApp.getApplicationContext().getSharedPreferences(PREF_DEVICE_TAB, Context.MODE_PRIVATE);
             sp.edit().putInt(KEY_ROW, row)
                     .putInt(KEY_COLUMN, column)
                     .apply();
@@ -818,7 +818,7 @@ class AppApiForJSImpl implements EspWebConstants {
     }
 
     void loadDeviceTable() {
-        SharedPreferences sp = mApp.getSharedPreferences(PREF_DEVICE_TAB, Context.MODE_PRIVATE);
+        SharedPreferences sp = mApp.getApplicationContext().getSharedPreferences(PREF_DEVICE_TAB, Context.MODE_PRIVATE);
         int row = sp.getInt(KEY_ROW, -1);
         int column = sp.getInt(KEY_COLUMN, -1);
 
@@ -846,7 +846,7 @@ class AppApiForJSImpl implements EspWebConstants {
         try {
             JSONArray array = new JSONArray(devices);
 
-            SharedPreferences sp = mApp.getSharedPreferences(PREF_TAB_DEVICES, Context.MODE_PRIVATE);
+            SharedPreferences sp = mApp.getApplicationContext().getSharedPreferences(PREF_TAB_DEVICES, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sp.edit();
 
             for (int i = 0; i < array.length(); i++) {
@@ -864,7 +864,7 @@ class AppApiForJSImpl implements EspWebConstants {
     void loadTableDevices() {
         JSONArray array = new JSONArray();
 
-        SharedPreferences sp = mApp.getSharedPreferences(PREF_TAB_DEVICES, Context.MODE_PRIVATE);
+        SharedPreferences sp = mApp.getApplicationContext().getSharedPreferences(PREF_TAB_DEVICES, Context.MODE_PRIVATE);
         Map<String, ?> map = sp.getAll();
         for (Object obj : map.values()) {
             if (obj != null) {
@@ -885,7 +885,7 @@ class AppApiForJSImpl implements EspWebConstants {
 
         try {
             JSONArray macArray = new JSONArray(macs);
-            SharedPreferences sp = mApp.getSharedPreferences(PREF_TAB_DEVICES, Context.MODE_PRIVATE);
+            SharedPreferences sp = mApp.getApplicationContext().getSharedPreferences(PREF_TAB_DEVICES, Context.MODE_PRIVATE);
             for (int i = 0; i < macArray.length(); i++) {
                 String mac = macArray.getString(i);
                 String device = sp.getString(mac, null);
@@ -902,7 +902,7 @@ class AppApiForJSImpl implements EspWebConstants {
     }
 
     String loadTableDevice(String mac) {
-        SharedPreferences sp = mApp.getSharedPreferences(PREF_TAB_DEVICES, Context.MODE_PRIVATE);
+        SharedPreferences sp = mApp.getApplicationContext().getSharedPreferences(PREF_TAB_DEVICES, Context.MODE_PRIVATE);
         String device = sp.getString(mac, null);
         if (device != null) {
             try {
@@ -916,7 +916,7 @@ class AppApiForJSImpl implements EspWebConstants {
     }
 
     void removeAllTableDevices() {
-        SharedPreferences sp = mApp.getSharedPreferences(PREF_TAB_DEVICES, Context.MODE_PRIVATE);
+        SharedPreferences sp = mApp.getApplicationContext().getSharedPreferences(PREF_TAB_DEVICES, Context.MODE_PRIVATE);
         sp.edit().clear().apply();
     }
 
@@ -924,7 +924,7 @@ class AppApiForJSImpl implements EspWebConstants {
         try {
             JSONArray macArray = new JSONArray(devices);
 
-            SharedPreferences sp = mApp.getSharedPreferences(PREF_TAB_DEVICES, Context.MODE_PRIVATE);
+            SharedPreferences sp = mApp.getApplicationContext().getSharedPreferences(PREF_TAB_DEVICES, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sp.edit();
 
             for (int i = 0; i < macArray.length(); i++) {

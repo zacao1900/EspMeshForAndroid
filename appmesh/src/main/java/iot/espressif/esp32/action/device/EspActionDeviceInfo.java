@@ -142,7 +142,7 @@ public class EspActionDeviceInfo implements IEspActionDeviceInfo {
                     continue;
                 }
 
-                int cid = array.getInt(indexCid);
+                String cid = array.optString(indexCid);
                 characteristic.setCid(cid);
                 String cname = array.getString(indexCname);
                 characteristic.setName(cname);
@@ -212,7 +212,7 @@ public class EspActionDeviceInfo implements IEspActionDeviceInfo {
         for (int i = 0; i < ctrtArray.length(); i++) {
             try {
                 JSONObject ctrtJSON = ctrtArray.getJSONObject(i);
-                int cid = ctrtJSON.getInt(KEY_CID);
+                String cid = ctrtJSON.getString(KEY_CID);
                 String cname = ctrtJSON.getString(KEY_NAME);
                 String format = ctrtJSON.getString(KEY_FORMAT);
                 int perms = ctrtJSON.getInt(KEY_PERMS);
@@ -484,7 +484,7 @@ public class EspActionDeviceInfo implements IEspActionDeviceInfo {
             int cLen = cArray.length();
             for (int i = 0; i < cLen; i++) {
                 JSONObject cJSON = cArray.getJSONObject(i);
-                int cid = cJSON.getInt(KEY_CID);
+                String cid = cJSON.getString(KEY_CID);
                 EspDeviceCharacteristic c = device.getCharacteristic(cid);
                 if (c != null) {
                     switch (c.getFormat()) {

@@ -6,7 +6,7 @@ public class EspDeviceCharacteristic {
     public static final String FORMAT_STRING = "string";
     public static final String FORMAT_JSON = "json";
 
-    private int mCid;
+    private String mCid;
     private String mName;
     private String mFormat;
     private int mPerms;
@@ -15,11 +15,11 @@ public class EspDeviceCharacteristic {
     private Number mStep;
     private Object mValue;
 
-    public int getCid() {
+    public String getCid() {
         return mCid;
     }
 
-    public void setCid(int cid) {
+    public void setCid(String cid) {
         mCid = cid;
     }
 

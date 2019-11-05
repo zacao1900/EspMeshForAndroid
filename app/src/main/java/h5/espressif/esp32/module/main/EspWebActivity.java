@@ -33,7 +33,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.location.LocationManagerCompat;
+//import androidx.core.location.LocationManagerCompat;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -322,7 +322,7 @@ public class EspWebActivity extends AppCompatActivity {
 
     public boolean isLocationEnable() {
         LocationManager manager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        return manager != null && LocationManagerCompat.isLocationEnabled(manager);
+        return true;
     }
 
     public void evaluateJavascript(String script) {

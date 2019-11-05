@@ -6,6 +6,7 @@ import android.util.SparseArray;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
@@ -19,7 +20,7 @@ import iot.espressif.esp32.model.device.properties.EspDeviceCharacteristic;
 import iot.espressif.esp32.model.device.properties.EspDeviceState;
 
 class EspDevice implements IEspDevice {
-    private final SparseArray<EspDeviceCharacteristic> mCharaArray;
+    private final Map<String, EspDeviceCharacteristic> mCharaArray;
 
     private long mId;
     private String mKey;
@@ -50,7 +51,7 @@ class EspDevice implements IEspDevice {
     private final Set<String> mGroups;
 
     EspDevice() {
-        mCharaArray = new SparseArray<>();
+        mCharaArray = new HashMap();
         mCacheMap = new Hashtable<>();
         mMeshLayerLevel = LAYER_UNKNOW;
         mGroups = new HashSet<>();
@@ -228,7 +229,7 @@ class EspDevice implements IEspDevice {
     }
 
     @Override
-    public EspDeviceCharacteristic getCharacteristic(int cid) {
+    public EspDeviceCharacteristic getCharacteristic(String cid) {
         synchronized (mCharaArray) {
             return mCharaArray.get(cid);
         }
@@ -239,7 +240,7 @@ class EspDevice implements IEspDevice {
         synchronized (mCharaArray) {
             List<EspDeviceCharacteristic> result = new ArrayList<>();
             for (int i = 0; i < mCharaArray.size(); i++) {
-                result.add(mCharaArray.valueAt(i));
+                result.add(mCharaArray.get(i));
             }
             return result;
         }
@@ -248,7 +249,7 @@ class EspDevice implements IEspDevice {
     @Override
     public void addOrReplaceCharacteristic(EspDeviceCharacteristic characteristic) {
         synchronized (mCharaArray) {
-            mCharaArray.append(characteristic.getCid(), characteristic);
+            mCharaArray.put(characteristic.getCid(), characteristic);
         }
     }
 
@@ -256,7 +257,7 @@ class EspDevice implements IEspDevice {
     public void addOrReplaceCharacteristic(Collection<EspDeviceCharacteristic> characteristics) {
         synchronized (mCharaArray) {
             for (EspDeviceCharacteristic c : characteristics) {
-                mCharaArray.append(c.getCid(), c);
+                mCharaArray.put(c.getCid(), c);
             }
         }
     }

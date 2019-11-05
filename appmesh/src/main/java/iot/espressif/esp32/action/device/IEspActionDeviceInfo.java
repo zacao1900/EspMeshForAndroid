@@ -11,13 +11,13 @@ public interface IEspActionDeviceInfo extends IEspActionDevice {
     String KEY_TID = "tid";
     String KEY_NAME = "name";
     String KEY_CHARACTERISTICS = "characteristics";
-    String KEY_CID = "cid";
+    String KEY_CID = "pid";
     String KEY_FORMAT = "format";
     String KEY_PERMS = "perms";
     String KEY_MIN = "min";
     String KEY_MAX = "max";
     String KEY_STEP = "step";
-    String KEY_VALUE = "value";
+    String KEY_VALUE = "pvalue";
     String KEY_CIDS = "cids";
     String KEY_VERSION = "version";
     String KEY_PROTOCOL = "protocol_version";

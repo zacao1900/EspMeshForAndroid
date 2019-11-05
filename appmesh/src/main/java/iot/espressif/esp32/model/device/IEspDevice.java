@@ -266,7 +266,7 @@ public interface IEspDevice {
      * @param cid characteristic id
      * @return null if no such characteristic
      */
-    EspDeviceCharacteristic getCharacteristic(int cid);
+    EspDeviceCharacteristic getCharacteristic(String cid);
 
     /**
      * Get all characteristics of the devices

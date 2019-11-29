@@ -42,8 +42,8 @@ public interface IEspActionDeviceInfo extends IEspActionDevice {
     void doActionGetDevicesInfoLocal(Collection<IEspDevice> devices);
     boolean doActionSetStatusLocal(IEspDevice device, Collection<EspDeviceCharacteristic> characteristics);
     List<EspHttpResponse> doActionSetStatusLocal(Collection<IEspDevice> devices, Collection<EspDeviceCharacteristic> characteristics);
-    boolean doActionGetStatusLocal(IEspDevice device, int... cids);
-    void doActionGetStatusLocal(Collection<IEspDevice> devices, int... cids);
+    boolean doActionGetStatusLocal(IEspDevice device, String... cids);
+    void doActionGetStatusLocal(Collection<IEspDevice> devices, String... cids);
 
 
 }

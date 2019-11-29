@@ -121,11 +121,11 @@ class EspMeshApisImpl extends EspMeshApis {
     }
 
     @Override
-    public boolean getDeviceStatus(@NonNull IEspDevice device, int... cids) {
+    public boolean getDeviceStatus(@NonNull IEspDevice device, String... cids) {
         return new EspActionDeviceInfo().doActionGetStatusLocal(device, cids);
     }
 
-    public void getDevicesStatus(@NonNull Collection<IEspDevice> devices, int... cids) {
+    public void getDevicesStatus(@NonNull Collection<IEspDevice> devices, String... cids) {
         new EspActionDeviceInfo().doActionGetStatusLocal(devices, cids);
     }
 

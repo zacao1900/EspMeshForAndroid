@@ -1,4 +1,4 @@
-package h5.espressif.esp32.module.model.web;
+package h5.espressif.esp32.module.web;
 
 import android.os.Build;
 import android.webkit.JavascriptInterface;

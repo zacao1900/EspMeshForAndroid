@@ -8,8 +8,10 @@ import android.support.annotation.NonNull;
 
 import java.util.Collection;
 import java.util.Hashtable;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import iot.espressif.esp32.app.EspApplication;
 import iot.espressif.esp32.model.device.ble.MeshBlufiCallback;
@@ -20,13 +22,14 @@ import libs.espressif.log.EspLog;
 public class EspActionDeviceBatchBluFi extends EspActionDeviceBlufi implements IEspActionDeviceBatchBluFi {
     private final EspLog mLog = new EspLog(getClass());
 
-    private Collection<BluetoothDevice> mDevices;
+    private final LinkedList<BluetoothDevice> mDeviceQueue;
+    private final AtomicInteger mDeviceCounter;
     private int mMeshVersion;
     private MeshBlufiCallback mUserCallback;
 
     private volatile boolean mClosed = false;
 
-    private final LinkedBlockingQueue<Boolean> mQueue = new LinkedBlockingQueue<>();
+    private final LinkedBlockingQueue<Boolean> mConnectQueue = new LinkedBlockingQueue<>();
     private Map<BluetoothDevice, MeshBlufiClient> mMeshBlufiClients;
     private Thread mThread;
 
@@ -34,7 +37,8 @@ public class EspActionDeviceBatchBluFi extends EspActionDeviceBlufi implements I
 
     public EspActionDeviceBatchBluFi(@NonNull Collection<BluetoothDevice> devices, int meshVersion,
                                      @NonNull MeshBlufiCallback userCallback) {
-        mDevices = devices;
+        mDeviceQueue = new LinkedList<>(devices);
+        mDeviceCounter = new AtomicInteger(0);
         mMeshVersion = meshVersion;
         mUserCallback = userCallback;
 
@@ -61,6 +65,7 @@ public class EspActionDeviceBatchBluFi extends EspActionDeviceBlufi implements I
         mMeshBlufiClients.clear();
     }
 
+    @Override
     public MeshBlufiClient doActionConnectMeshBLE(@NonNull BluetoothDevice device, int meshVersion,
                                                   @NonNull MeshBlufiCallback userCallback) {
         throw new IllegalStateException("Forbid this function, call execute()");
@@ -73,12 +78,12 @@ public class EspActionDeviceBatchBluFi extends EspActionDeviceBlufi implements I
                 super.onConnectionStateChange(gatt, status, newState);
 
                 if (status != BluetoothGatt.GATT_SUCCESS) {
-                    mQueue.add(false);
+                    mConnectQueue.add(false);
                 } else {
                     if (newState == BluetoothGatt.STATE_CONNECTED) {
-                        mQueue.add(true);
+                        mConnectQueue.add(true);
                     } else if (newState == BluetoothGatt.STATE_DISCONNECTED) {
-                        mQueue.add(false);
+                        mConnectQueue.add(false);
                     }
                 }
             }
@@ -94,6 +99,18 @@ public class EspActionDeviceBatchBluFi extends EspActionDeviceBlufi implements I
     }
 
     @Override
+    public void notifyNext() {
+        mLog.d("Execute Batch BluFi notifyNext");
+        synchronized (mDeviceQueue) {
+            int count = mDeviceCounter.decrementAndGet();
+            if (count < 0) {
+                mDeviceCounter.set(0);
+            }
+            mDeviceQueue.notify();
+        }
+    }
+
+    @Override
     public void execute() {
         if (mClosed) {
             throw new IllegalStateException("The action has closed");
@@ -101,21 +118,40 @@ public class EspActionDeviceBatchBluFi extends EspActionDeviceBlufi implements I
 
         mLog.d("Execute Batch BluFi");
         mThread = new Thread(() -> {
-            for (BluetoothDevice device : mDevices) {
+            while (!mDeviceQueue.isEmpty()) {
+                mLog.d("Execute Batch BluFi in Thread counte="+mDeviceCounter);
                 if (mClosed) {
                     break;
                 }
+                synchronized (mDeviceQueue) {
+                    if (mDeviceCounter.get() > CONNECTION_MAX) {
+                        try {
+                            mDeviceQueue.wait();
+                            mLog.d("Execute Batch BluFi wait");
+                        } catch (InterruptedException e) {
+                            mLog.w("DeviceQueue wait interrupted");
+                            break;
+                        }
+                    }else{
+                        mLog.d("Execute Batch BluFi else");
+                    }
+                }
 
+                BluetoothDevice device = mDeviceQueue.poll();
+                mListener.addConnectIngDeviceAddress(device.getAddress());
+                assert device != null;
                 MeshBlufiClient blufi = new MeshBlufiClient();
                 mMeshBlufiClients.put(device, blufi);
                 if (mListener != null) {
                     mListener.onClientCreated(blufi);
                 }
+                boolean connected = false;
                 for (int i = 0; i < 5; ++i) {
                     connect(blufi, device);
                     try {
-                        boolean connected = mQueue.take();
+                        connected = mConnectQueue.take();
                         if (connected) {
+                            mDeviceCounter.incrementAndGet();
                             break;
                         }
                     } catch (InterruptedException e) {
@@ -130,8 +166,10 @@ public class EspActionDeviceBatchBluFi extends EspActionDeviceBlufi implements I
                         break;
                     }
                 }
+                if (mListener != null) {
+                    mListener.onConnectResult(device, connected);
+                }
             }
-
             mLog.d("Batch BluFi Over");
         });
         mThread.start();

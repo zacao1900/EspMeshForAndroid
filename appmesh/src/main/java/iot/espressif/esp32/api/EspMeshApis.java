@@ -167,7 +167,7 @@ public abstract class EspMeshApis {
      * @param cids   the EspDeviceCharacteristic need to update
      * @return true if update successfully
      */
-    abstract public boolean getDeviceStatus(@NonNull IEspDevice device, int... cids);
+    abstract public boolean getDeviceStatus(@NonNull IEspDevice device, String... cids);
 
     /**
      * Update specific status
@@ -175,7 +175,7 @@ public abstract class EspMeshApis {
      * @param devices MDF devices
      * @param cids    the EspDeviceCharacteristic need to update
      */
-    abstract public void getDevicesStatus(@NonNull Collection<IEspDevice> devices, int... cids);
+    abstract public void getDevicesStatus(@NonNull Collection<IEspDevice> devices, String... cids);
 
     /**
      * Post a request to reboot the device

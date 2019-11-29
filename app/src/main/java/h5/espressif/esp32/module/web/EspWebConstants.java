@@ -1,4 +1,4 @@
-package h5.espressif.esp32.module.model.web;
+package h5.espressif.esp32.module.web;
 
 interface EspWebConstants {
     String KEY_MAC = "mac";
@@ -60,6 +60,7 @@ interface EspWebConstants {
     String KEY_RSSI = "rssi";
     String KEY_ORG = "org";
     String KEY_METHOD = "method";
+    String KEY_SCANNER = "scanner";
     String KEY_ARGUMENT = "argument";
     String KEY_HOST = "host";
     String KEY_FILTERS = "filters";

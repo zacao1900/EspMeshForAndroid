@@ -1,4 +1,4 @@
-package h5.espressif.esp32.module.model.web;
+package h5.espressif.esp32.module.web;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,14 +39,14 @@ public class WebUtils {
             params.setStaPassword(password);
 
             JSONArray whiteListArray = json.getJSONArray("white_list");
-            for (int i = 0; i < whiteListArray.length(); i++) {
+            for (int i = 0; i < whiteListArray.length(); ++i) {
                 String mac = whiteListArray.getString(i);
                 params.addWhiteAddress(DeviceUtil.convertToColonBssid(mac).toUpperCase());
             }
 
             JSONArray meshIdArray = json.getJSONArray("mesh_id");
             byte[] meshIdData = new byte[meshIdArray.length()];
-            for (int i = 0; i < meshIdData.length; i++) {
+            for (int i = 0; i < meshIdData.length; ++i) {
                 meshIdData[i] = (byte) meshIdArray.getInt(i);
             }
             params.setMeshID(meshIdData);

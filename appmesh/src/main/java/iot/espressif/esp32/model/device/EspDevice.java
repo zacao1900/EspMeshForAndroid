@@ -239,7 +239,7 @@ class EspDevice implements IEspDevice {
     public List<EspDeviceCharacteristic> getCharacteristics() {
         synchronized (mCharaArray) {
             List<EspDeviceCharacteristic> result = new ArrayList<>();
-            for (int i = 0; i < mCharaArray.size(); i++) {
+            for (int i = 0; i < mCharaArray.size(); ++i) {
                 result.add(mCharaArray.get(i));
             }
             return result;

@@ -47,7 +47,7 @@ public class EspActionDeviceInfo implements IEspActionDeviceInfo {
             if (!respJSON.isNull(KEY_GROUP)) {
                 JSONArray groupArray = respJSON.getJSONArray(KEY_GROUP);
                 List<String> groupList = new ArrayList<>(groupArray.length());
-                for (int i = 0; i < groupArray.length(); i++) {
+                for (int i = 0; i < groupArray.length(); ++i) {
                     groupList.add(groupArray.getString(i));
                 }
                 device.setGroups(groupList);
@@ -132,7 +132,7 @@ public class EspActionDeviceInfo implements IEspActionDeviceInfo {
         final int indexMin = 5;
         final int indexMax = 6;
         final int indexStep = 7;
-        for (int i = 0; i < ctrtArray.length(); i++) {
+        for (int i = 0; i < ctrtArray.length(); ++i) {
             try {
                 JSONArray array = ctrtArray.getJSONArray(i);
                 String format = array.getString(indexFormat);
@@ -209,7 +209,7 @@ public class EspActionDeviceInfo implements IEspActionDeviceInfo {
     }
 
     private void setDeviceCharacteristicsProtocol0(IEspDevice device, JSONArray ctrtArray) {
-        for (int i = 0; i < ctrtArray.length(); i++) {
+        for (int i = 0; i < ctrtArray.length(); ++i) {
             try {
                 JSONObject ctrtJSON = ctrtArray.getJSONObject(i);
                 String cid = ctrtJSON.getString(KEY_CID);
@@ -303,7 +303,7 @@ public class EspActionDeviceInfo implements IEspActionDeviceInfo {
             }
         }
 
-        for (int i = 0; i < tryCount && !allDeviceSet.isEmpty(); i++) {
+        for (int i = 0; i < tryCount && !allDeviceSet.isEmpty(); ++i) {
             byte[] content = json.toString().getBytes();
 
             Map<String, String> headers = new HashMap<>();
@@ -414,7 +414,7 @@ public class EspActionDeviceInfo implements IEspActionDeviceInfo {
     }
 
     @Override
-    public boolean doActionGetStatusLocal(IEspDevice device, int... cids) {
+    public boolean doActionGetStatusLocal(IEspDevice device, String... cids) {
         if (cids.length == 0) {
             return false;
         }
@@ -423,7 +423,7 @@ public class EspActionDeviceInfo implements IEspActionDeviceInfo {
         try {
             json.put(KEY_REQUEST, REQUEST_GET_STATUS);
             JSONArray cidArray = new JSONArray();
-            for (int cid : cids) {
+            for (String cid : cids) {
                 cidArray.put(cid);
             }
             json.put(KEY_CIDS, cidArray);
@@ -438,7 +438,7 @@ public class EspActionDeviceInfo implements IEspActionDeviceInfo {
     }
 
     @Override
-    public void doActionGetStatusLocal(Collection<IEspDevice> devices, int... cids) {
+    public void doActionGetStatusLocal(Collection<IEspDevice> devices, String... cids) {
         if (cids.length == 0) {
             return;
         }
@@ -447,7 +447,7 @@ public class EspActionDeviceInfo implements IEspActionDeviceInfo {
         try {
             json.put(KEY_REQUEST, REQUEST_GET_STATUS);
             JSONArray cidArray = new JSONArray();
-            for (int cid : cids) {
+            for (String cid : cids) {
                 cidArray.put(cid);
             }
             json.put(KEY_CIDS, cidArray);
@@ -482,7 +482,7 @@ public class EspActionDeviceInfo implements IEspActionDeviceInfo {
 
             JSONArray cArray = respJSON.getJSONArray(KEY_CHARACTERISTICS);
             int cLen = cArray.length();
-            for (int i = 0; i < cLen; i++) {
+            for (int i = 0; i < cLen; ++i) {
                 JSONObject cJSON = cArray.getJSONObject(i);
                 String cid = cJSON.getString(KEY_CID);
                 EspDeviceCharacteristic c = device.getCharacteristic(cid);

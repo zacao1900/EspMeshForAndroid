@@ -1,4 +1,4 @@
-package h5.espressif.esp32.module.model.web;
+package h5.espressif.esp32.module.web;
 
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
@@ -44,12 +44,14 @@ import java.util.TimeZone;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import h5.espressif.esp32.module.Utils;
 import h5.espressif.esp32.module.action.EspActionDeviceConfigure2;
 import h5.espressif.esp32.module.action.EspActionJSON;
 import h5.espressif.esp32.module.action.IEspActionDeviceConfigure2;
 import h5.espressif.esp32.module.main.EspWebActivity;
 import h5.espressif.esp32.module.model.event.SnifferDiscoveredEvent;
 import io.reactivex.Observable;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -318,7 +320,7 @@ class AppApiForJSImpl implements EspWebConstants {
         Map<String, List<IEspDevice>> addressDeviceMap = new HashMap<>();
         Map<String, Set<String>> addressGroupMap = new HashMap<>();
         List<IEspDevice> userDevices = mUser.getAllDeviceList();
-        for (int i = 0; i < groupArray.length(); i++) {
+        for (int i = 0; i < groupArray.length(); ++i) {
             String group = groupArray.getString(i);
 
             for (IEspDevice device : userDevices) {
@@ -390,7 +392,7 @@ class AppApiForJSImpl implements EspWebConstants {
                     }
                 });
 
-        for (int i = 0; i < deviceHeaderMap.size(); i++) {
+        for (int i = 0; i < deviceHeaderMap.size(); ++i) {
             try {
                 queue.take();
             } catch (InterruptedException e) {
@@ -620,7 +622,7 @@ class AppApiForJSImpl implements EspWebConstants {
                 return requestGroup(macArray, groupArray, postJSON.toString().getBytes(), headers);
             } else {
                 List<IEspDevice> devices = new ArrayList<>(macArray.length());
-                for (int i = 0; i < macArray.length(); i++) {
+                for (int i = 0; i < macArray.length(); ++i) {
                     String mac = macArray.getString(i);
                     IEspDevice device = mUser.getDeviceForMac(mac);
                     if (device != null) {
@@ -661,18 +663,6 @@ class AppApiForJSImpl implements EspWebConstants {
         }
         synchronized (mBlufiLock) {
             String deviceMac = DeviceUtil.convertToColonBssid(configRequest.bleAddress).toUpperCase();
-//            String devStaBssid = getStaMacForBleMac(bleAddress);
-//            devStaBssid = DeviceUtil.convertToColonBssid(devStaBssid);
-//            List<String> bssids = new ArrayList<>();
-//            bssids.add(devStaBssid);
-//            for (int i = 0; i < whiteListArray.length(); i++) {
-//                try {
-//                    String white = whiteListArray.getString(i);
-//                    bssids.add(DeviceUtil.convertToColonBssid(white));
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
             mBlufi = new EspActionDeviceConfigure2().doActionConfigureBlufi2(
                     deviceMac, configRequest.version, configRequest.params, new ConfigureProgressCB());
         }
@@ -761,7 +751,7 @@ class AppApiForJSImpl implements EspWebConstants {
         try {
             SharedPreferences.Editor editor = sp.edit();
             JSONArray array = new JSONArray(info);
-            for (int i = 0; i < array.length(); i++) {
+            for (int i = 0; i < array.length(); ++i) {
                 JSONObject json = array.getJSONObject(i);
                 String mac = json.getString(KEY_MAC);
                 editor.putString(mac, json.toString());
@@ -784,7 +774,7 @@ class AppApiForJSImpl implements EspWebConstants {
         try {
             SharedPreferences.Editor editor = sp.edit();
             JSONArray array = new JSONArray(macs);
-            for (int i = 0; i < array.length(); i++) {
+            for (int i = 0; i < array.length(); ++i) {
                 String mac = array.getString(i);
                 editor.remove(mac);
             }
@@ -849,7 +839,7 @@ class AppApiForJSImpl implements EspWebConstants {
             SharedPreferences sp = mApp.getApplicationContext().getSharedPreferences(PREF_TAB_DEVICES, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sp.edit();
 
-            for (int i = 0; i < array.length(); i++) {
+            for (int i = 0; i < array.length(); ++i) {
                 JSONObject json = array.getJSONObject(i);
                 String mac = json.getString(KEY_MAC);
                 editor.putString(mac, json.toString());
@@ -885,8 +875,13 @@ class AppApiForJSImpl implements EspWebConstants {
 
         try {
             JSONArray macArray = new JSONArray(macs);
+<<<<<<< HEAD:app/src/main/java/h5/espressif/esp32/module/model/web/AppApiForJSImpl.java
             SharedPreferences sp = mApp.getApplicationContext().getSharedPreferences(PREF_TAB_DEVICES, Context.MODE_PRIVATE);
             for (int i = 0; i < macArray.length(); i++) {
+=======
+            SharedPreferences sp = mApp.getSharedPreferences(PREF_TAB_DEVICES, Context.MODE_PRIVATE);
+            for (int i = 0; i < macArray.length(); ++i) {
+>>>>>>> a4fb86ca0b573a475d669c038cb6b2543c5b0199:app/src/main/java/h5/espressif/esp32/module/web/AppApiForJSImpl.java
                 String mac = macArray.getString(i);
                 String device = sp.getString(mac, null);
                 if (device != null) {
@@ -927,7 +922,7 @@ class AppApiForJSImpl implements EspWebConstants {
             SharedPreferences sp = mApp.getApplicationContext().getSharedPreferences(PREF_TAB_DEVICES, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sp.edit();
 
-            for (int i = 0; i < macArray.length(); i++) {
+            for (int i = 0; i < macArray.length(); ++i) {
                 String mac = macArray.getString(i);
                 editor.remove(mac);
             }
@@ -972,27 +967,35 @@ class AppApiForJSImpl implements EspWebConstants {
             return;
         }
 
-        List<SnifferDB> snifferDBS = MeshObjectBox.getInstance()
-                .sniffer()
-                .loadSniffers(minTime, maxTime, delDuplicate);
-        JSONArray snifferArray = new JSONArray();
-        for (SnifferDB sniffer : snifferDBS) {
-            try {
-                JSONObject json = new JSONObject()
-                        .put(KEY_TYPE, sniffer.type)
-                        .put(KEY_MAC, sniffer.bssid)
-                        .put(KEY_CHANNEL, sniffer.channel)
-                        .put(KEY_TIME, sniffer.utc_time + TimeZone.getDefault().getRawOffset())
-                        .put(KEY_RSSI, sniffer.rssi)
-                        .put(KEY_NAME, sniffer.name)
-                        .put(KEY_ORG, sniffer.organization);
-                snifferArray.put(json);
-            } catch (JSONException e) {
-                e.printStackTrace();
+        Observable.create((ObservableOnSubscribe<String>) emitter -> {
+            List<SnifferDB> snifferDBS = MeshObjectBox.getInstance()
+                    .sniffer()
+                    .loadSniffers(minTime, maxTime, delDuplicate);
+            JSONArray snifferArray = new JSONArray();
+            for (SnifferDB sniffer : snifferDBS) {
+                try {
+                    String name = sniffer.name == null ? null : Utils.base64(sniffer.name);
+                    JSONObject json = new JSONObject()
+                            .put(KEY_TYPE, sniffer.type)
+                            .put(KEY_MAC, sniffer.bssid)
+                            .put(KEY_CHANNEL, sniffer.channel)
+                            .put(KEY_TIME, sniffer.utc_time + TimeZone.getDefault().getRawOffset())
+                            .put(KEY_RSSI, sniffer.rssi)
+                            .put(KEY_NAME, name)
+                            .put(KEY_SCANNER, sniffer.device_mac)
+                            .put(KEY_ORG, sniffer.organization);
+                    snifferArray.put(json);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
-        }
 
-        evaluateJavascript(String.format("%s(\'%s\')", callback, snifferArray.toString()));
+            emitter.onNext(snifferArray.toString());
+            emitter.onComplete();
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext(sniffers -> evaluateJavascript(String.format("%s(\'%s\')", callback, sniffers)))
+                .subscribe();
     }
 
     public static class SnifferSubscriber {
@@ -1052,13 +1055,16 @@ class AppApiForJSImpl implements EspWebConstants {
                         JSONArray snifferArray = new JSONArray();
                         long timeZoneOffset = TimeZone.getDefault().getRawOffset();
                         for (Sniffer sniffer : snifferList) {
+                            String name = sniffer.getName() == null ?
+                                    null : Utils.base64(sniffer.getName());
                             JSONObject json = new JSONObject()
                                     .put(KEY_TYPE, sniffer.getType())
                                     .put(KEY_MAC, sniffer.getBssid())
                                     .put(KEY_CHANNEL, sniffer.getChannel())
                                     .put(KEY_TIME, sniffer.getUTCTime() + timeZoneOffset)
                                     .put(KEY_RSSI, sniffer.getRssi())
-                                    .put(KEY_NAME, sniffer.getName())
+                                    .put(KEY_NAME, name)
+                                    .put(KEY_SCANNER, sniffer.getDeviceMac())
                                     .put(KEY_ORG, sniffer.getOrganization());
                             snifferArray.put(json);
                         }
@@ -1162,7 +1168,7 @@ class AppApiForJSImpl implements EspWebConstants {
             bin = json.getString(KEY_BIN);
 
             JSONArray macArray = json.getJSONArray(KEY_MACS);
-            for (int i = 0; i < macArray.length(); i++) {
+            for (int i = 0; i < macArray.length(); ++i) {
                 String mac = macArray.getString(i);
                 IEspDevice device = mUser.getDeviceForMac(mac);
                 if (device != null) {
@@ -1322,7 +1328,7 @@ class AppApiForJSImpl implements EspWebConstants {
             JSONObject json = new JSONObject(request);
             JSONArray addrArray = json.getJSONArray(KEY_HOST);
             synchronized (mOtaLock) {
-                for (int i = 0; i < addrArray.length(); i++) {
+                for (int i = 0; i < addrArray.length(); ++i) {
                     String address = addrArray.getString(i);
                     EspOTAClient client = mOtaClientMap.remove(address);
                     if (client != null) {
@@ -1344,7 +1350,7 @@ class AppApiForJSImpl implements EspWebConstants {
                     try {
                         JSONObject json = new JSONObject(infoStr);
                         JSONArray macArray = json.getJSONArray(KEY_MACS);
-                        for (int i = 0; i < macArray.length(); i++) {
+                        for (int i = 0; i < macArray.length(); ++i) {
                             String mac = macArray.getString(i);
                             IEspDevice device = mUser.getDeviceForMac(mac);
                             if (device != null) {
@@ -1375,7 +1381,7 @@ class AppApiForJSImpl implements EspWebConstants {
                     try {
                         JSONObject json = new JSONObject(infoStr);
                         JSONArray macArray = json.getJSONArray(KEY_MACS);
-                        for (int i = 0; i < macArray.length(); i++) {
+                        for (int i = 0; i < macArray.length(); ++i) {
                             String mac = macArray.getString(i);
                             IEspDevice device = mUser.getDeviceForMac(mac);
                             if (device != null) {
@@ -1414,7 +1420,7 @@ class AppApiForJSImpl implements EspWebConstants {
             deviceMacs = json.optJSONArray(KEY_DEVICE_MACS);
             if (deviceMacs != null) {
                 deviceMacList = new ArrayList<>(deviceMacs.length());
-                for (int i = 0; i < deviceMacs.length(); i++) {
+                for (int i = 0; i < deviceMacs.length(); ++i) {
                     deviceMacList.add(deviceMacs.getString(i));
                 }
             }
@@ -1430,7 +1436,7 @@ class AppApiForJSImpl implements EspWebConstants {
     void saveGroups(String array) {
         try {
             JSONArray jsonArray = new JSONArray(array);
-            for (int i = 0; i < jsonArray.length(); i++) {
+            for (int i = 0; i < jsonArray.length(); ++i) {
                 JSONObject json = jsonArray.getJSONObject(i);
                 saveGroup(json.toString());
             }
@@ -1572,7 +1578,7 @@ class AppApiForJSImpl implements EspWebConstants {
             if (!json.isNull(KEY_FILTERS)) {
                 JSONArray filterArray = json.getJSONArray(KEY_FILTERS);
                 filterList = new ArrayList<>(filterArray.length());
-                for (int i = 0; i < filterArray.length(); i++) {
+                for (int i = 0; i < filterArray.length(); ++i) {
                     JSONObject filterJSON = filterArray.getJSONObject(i);
                     String filterAddress = filterJSON.optString(KEY_ADDRESS, null);
                     String filterName = filterJSON.optString(KEY_NAME, null);
@@ -1836,10 +1842,10 @@ class AppApiForJSImpl implements EspWebConstants {
         try {
             JSONObject result = new JSONObject()
                     .put(KEY_TAG, tag)
-                    .put(KEY_CONTENT, URLEncoder.encode(array.toString(), "UTF-8"));
+                    .put(KEY_CONTENT, Utils.base64(array.toString()));
 
             evaluateJavascript(String.format("%s(\'%s\')", callback, result.toString()));
-        } catch (JSONException | UnsupportedEncodingException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }
@@ -1859,7 +1865,7 @@ class AppApiForJSImpl implements EspWebConstants {
     void removeDevicesForMacs(String macArray) {
         try {
             JSONArray array = new JSONArray(macArray);
-            for (int i = 0; i < array.length(); i++) {
+            for (int i = 0; i < array.length(); ++i) {
                 mUser.removeDevice(array.getString(i));
             }
         } catch (JSONException e) {
@@ -1877,7 +1883,7 @@ class AppApiForJSImpl implements EspWebConstants {
         try {
             JSONArray staArray = new JSONArray(staMacs);
             JSONArray result = new JSONArray();
-            for (int i = 0; i < staArray.length(); i++) {
+            for (int i = 0; i < staArray.length(); ++i) {
                 String staMac = staArray.getString(i);
                 String bleMac = DeviceUtil.getBleMacForStaMac(staMac);
                 result.put(bleMac);
@@ -1894,7 +1900,7 @@ class AppApiForJSImpl implements EspWebConstants {
         try {
             JSONArray bleArray = new JSONArray(bleMacs);
             JSONArray result = new JSONArray();
-            for (int i = 0; i < bleArray.length(); i++) {
+            for (int i = 0; i < bleArray.length(); ++i) {
                 String bleMac = bleArray.getString(i);
                 String staMac = DeviceUtil.getStaMacForBleMac(bleMac);
                 result.put(staMac);
@@ -1949,7 +1955,7 @@ class AppApiForJSImpl implements EspWebConstants {
         try {
             JSONArray array = new JSONArray(request);
 
-            for (int i = 0; i < array.length(); i++) {
+            for (int i = 0; i < array.length(); ++i) {
                 JSONObject json = array.getJSONObject(i);
                 String code = json.getString(KEY_CODE);
                 String mac = json.getString(KEY_MAC);
@@ -1969,7 +1975,7 @@ class AppApiForJSImpl implements EspWebConstants {
             JSONArray array = new JSONArray(macArray);
 
             MeshObjectBox dbManager = MeshObjectBox.getInstance();
-            for (int i = 0; i < array.length(); i++) {
+            for (int i = 0; i < array.length(); ++i) {
                 String mac = array.getString(i);
                 dbManager.custom().deleteDeviceHW(mac);
             }
@@ -2038,7 +2044,7 @@ class AppApiForJSImpl implements EspWebConstants {
             JSONArray macs = new JSONArray(macArray);
             SharedPreferences sp = mActivity.getSharedPreferences(PREF_MAC, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sp.edit();
-            for (int i = 0; i < macs.length(); i++) {
+            for (int i = 0; i < macs.length(); ++i) {
                 editor.remove(macs.getString(i));
             }
             editor.apply();
@@ -2076,7 +2082,7 @@ class AppApiForJSImpl implements EspWebConstants {
             SharedPreferences.Editor lastSaveEditor = mActivity
                     .getSharedPreferences(PREF_FILE_LAST_SAVE, Context.MODE_PRIVATE)
                     .edit();
-            for (int i = 0; i < contentArray.length(); i++) {
+            for (int i = 0; i < contentArray.length(); ++i) {
                 JSONObject kvJSON = contentArray.getJSONObject(i);
                 String key = kvJSON.getString(KEY_KEY);
                 String value = kvJSON.getString(KEY_VALUE);
@@ -2106,7 +2112,7 @@ class AppApiForJSImpl implements EspWebConstants {
         SharedPreferences sp = mActivity.getSharedPreferences(fileName, Context.MODE_PRIVATE);
         try {
             SharedPreferences.Editor editor = sp.edit();
-            for (int i = 0; i < keyArray.length(); i++) {
+            for (int i = 0; i < keyArray.length(); ++i) {
                 String key = keyArray.getString(i);
                 editor.remove(key);
             }
@@ -2216,7 +2222,7 @@ class AppApiForJSImpl implements EspWebConstants {
             host = json.getString(KEY_HOST);
             JSONArray macArray = json.getJSONArray(KEY_MACS);
             macList = new ArrayList<>(macArray.length());
-            for (int i = 0; i < macArray.length(); i++) {
+            for (int i = 0; i < macArray.length(); ++i) {
                 macList.add(macArray.getString(i));
             }
             rootResp = json.optBoolean(KEY_ROOT_RESP, false);
@@ -2279,7 +2285,7 @@ class AppApiForJSImpl implements EspWebConstants {
         try {
             JSONArray array = new JSONArray(buffer);
             byte[] data = new byte[array.length()];
-            for (int i = 0; i < array.length(); i++) {
+            for (int i = 0; i < array.length(); ++i) {
                 data[i] = (byte) array.getInt(i);
             }
 
@@ -2320,7 +2326,7 @@ class AppApiForJSImpl implements EspWebConstants {
                 String group = groups.next();
                 JSONArray macArray = json.getJSONArray(group);
 
-                for (int i = 0; i < macArray.length(); i++) {
+                for (int i = 0; i < macArray.length(); ++i) {
                     String mac = macArray.getString(i);
 
                     Set<String> groupSet = macGroupMap.get(mac);
@@ -2427,7 +2433,7 @@ class AppApiForJSImpl implements EspWebConstants {
                 case "buffer":
                     JSONArray buffer = json.getJSONArray(KEY_VALUE);
                     value = new byte[buffer.length()];
-                    for (int i = 0; i < buffer.length(); i++) {
+                    for (int i = 0; i < buffer.length(); ++i) {
                         value[i] = (byte) buffer.getInt(i);
                     }
                     break;
@@ -2460,8 +2466,8 @@ class AppApiForJSImpl implements EspWebConstants {
             return;
         }
 
-        int styleFlags = defalutStyle ? View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                : View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+        int styleFlags = defalutStyle ? View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                : View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
         int bgColor = Color.argb(a, r, g, b);
         mActivity.runOnUiThread(() -> {
             mActivity.getWindow().getDecorView().setSystemUiVisibility(styleFlags);

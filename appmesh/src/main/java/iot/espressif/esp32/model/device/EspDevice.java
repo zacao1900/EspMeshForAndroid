@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -33,11 +32,10 @@ class EspDevice implements IEspDevice {
     private EspDeviceState mState;
     private String mParentDeviceMac;
     private String mRootDeviceMac;
-    private int mMeshLayerLevel;
+    private int mMeshLayerLevel = LAYER_UNKNOWN;
     private String mMeshId;
     private String mProtocol;
     private int mProtocolPort = -1;
-    private Map<String, Object> mCacheMap;
     private String mPosition;
     private int mRssi = RSSI_NULL;
 
@@ -52,8 +50,8 @@ class EspDevice implements IEspDevice {
 
     EspDevice() {
         mCharaArray = new HashMap();
-        mCacheMap = new Hashtable<>();
-        mMeshLayerLevel = LAYER_UNKNOW;
+
+        mMeshLayerLevel = LAYER_UNKNOWN;
         mGroups = new HashSet<>();
     }
 
@@ -277,21 +275,6 @@ class EspDevice implements IEspDevice {
     }
 
     @Override
-    public void putCahce(String key, Object value) {
-        mCacheMap.put(key, value);
-    }
-
-    @Override
-    public Object getCache(String key) {
-        return mCacheMap.get(key);
-    }
-
-    @Override
-    public void removeCache(String key) {
-        mCacheMap.remove(key);
-    }
-
-    @Override
     public void setPosition(String position) {
         mPosition = position;
     }
@@ -387,7 +370,6 @@ class EspDevice implements IEspDevice {
     @Override
     public void release() {
         mCharaArray.clear();
-        mCacheMap.clear();
     }
 
     @Override

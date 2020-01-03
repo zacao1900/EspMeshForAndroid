@@ -17,6 +17,8 @@ public interface IEspActionDeviceBatchBluFi {
 
     void setMeshBlufiClientListener(MeshBlufiClientListener listener);
 
+    void setTryConnectingCount(int count);
+
     void notifyNext();
 
     void execute();

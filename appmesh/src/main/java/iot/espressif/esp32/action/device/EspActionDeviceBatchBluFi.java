@@ -171,7 +171,7 @@ public class EspActionDeviceBatchBluFi extends EspActionDeviceBlufi implements I
                     }
 
                     try {
-                        Thread.sleep(300);
+                        Thread.sleep(500);
                     } catch (InterruptedException e) {
                         mLog.w("Sleep connect interrupted");
                         break;

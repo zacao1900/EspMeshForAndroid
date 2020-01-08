@@ -115,6 +115,7 @@ public class EspActionDeviceBlufi implements IEspActionDeviceBlufi {
 
                 BlufiClient blufiClient = new BlufiClient(gatt, writeChar, notifyChar, mActionCallback);
                 blufiClient.setDeviceVersion(mMeshBlufi.getMeshVersion());
+                blufiClient.setPostPackageLengthLimit(17);//设置分包大小
                 mMeshBlufi.setBlufiClient(blufiClient);
 
                 gatt.requestConnectionPriority(BluetoothGatt.CONNECTION_PRIORITY_HIGH);

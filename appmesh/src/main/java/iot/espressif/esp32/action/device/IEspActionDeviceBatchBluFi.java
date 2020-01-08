@@ -5,7 +5,7 @@ import android.bluetooth.BluetoothDevice;
 import iot.espressif.esp32.model.device.ble.MeshBlufiClient;
 
 public interface IEspActionDeviceBatchBluFi {
-    int CONNECTION_MAX = 5;
+    int CONNECTION_MAX = 3;
 
     interface MeshBlufiClientListener {
         void onClientCreated(MeshBlufiClient client);

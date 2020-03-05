@@ -311,7 +311,7 @@ public class DeviceUtil {
             headers = new HashMap<>();
         }
         Collection<String> dstBssids;
-        if (bssids.size() >= 200) {
+      if (bssids.size() >= 300) {
             dstBssids = new ArrayList<>(1);
             dstBssids.add(DeviceConstants.MAC_BROADCAST);
         } else {

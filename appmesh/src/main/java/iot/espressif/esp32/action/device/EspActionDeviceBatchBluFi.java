@@ -116,7 +116,9 @@ public class EspActionDeviceBatchBluFi extends EspActionDeviceBlufi implements I
                 }
 
                 BluetoothDevice device = mDeviceQueue.poll();
-                mListener.addConnectIngDeviceAddress(device.getAddress());
+                if(null!=mUserCallback){
+                    mUserCallback.addConnectIngDeviceAddress(device.getAddress());
+                }
                 assert device != null;
                 MeshBlufiClient blufi = new MeshBlufiClient();
                 blufi.setMeshVersion(mMeshVersion);

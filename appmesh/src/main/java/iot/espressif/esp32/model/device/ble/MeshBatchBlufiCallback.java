@@ -5,12 +5,18 @@ import android.bluetooth.BluetoothDevice;
 import meshblufi.espressif.BlufiClient;
 
 public abstract class MeshBatchBlufiCallback extends MeshBlufiCallback {
-    public void onClientCreated(MeshBlufiClient client){
+    public void onClientCreated(MeshBlufiClient client) {
     }
 
-    public void onConnectResult(BluetoothDevice device, boolean connected){
+    public void onConnectResult(BluetoothDevice device, boolean connected) {
     }
 
-    public void onBlufiClientSet(BlufiClient client){
+    public void onBlufiClientSet(BlufiClient client) {
+    }
+
+    public void addConnectIngDeviceAddress(String address){
+
     }
 }
+
+

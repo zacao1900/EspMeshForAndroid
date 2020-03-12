@@ -23,8 +23,9 @@ public abstract class MeshScanListener implements ScanListener {
         int rssi = scanResult.getRssi();
         byte[] scanRecord = scanResult.getScanRecord().getBytes();
         MeshBleDevice meshBleDevice = new MeshBleDevice(device, rssi, scanRecord, mManufacturerID);
-        if (meshBleDevice.getMeshVersion() >= 0) {
+//        if (meshBleDevice.getMeshVersion() >= 0) {
+        //再app端必需加 ScanFilter 无需判断meshversion 和tid
             onMeshDeviceScanned(meshBleDevice);
-        }
+//        }
     }
 }

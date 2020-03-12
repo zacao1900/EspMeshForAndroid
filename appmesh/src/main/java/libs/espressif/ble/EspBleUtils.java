@@ -69,13 +69,14 @@ public class EspBleUtils {
      * Starts a scan for Bluetooth LE devices.
      *
      * @param listener the callback LE scan results are delivered.
+     * @param filters  {@link ScanFilter}s for finding exact BLE devices.
      * @return true, if the scan was started successfully.
      */
-    public static boolean startScanBle(@NonNull final ScanListener listener) {
+    public static boolean startScanBle(@NonNull final ScanListener listener, List<ScanFilter> filters) {
         ScanSettings settings = new ScanSettings.Builder()
                 .setScanMode(ScanSettings.SCAN_MODE_BALANCED)
                 .build();
-        return startScanBle(listener, settings, null);
+        return startScanBle(listener, settings, filters);
     }
 
     public static boolean startScanBle(@NonNull ScanListener listener, ScanSettings settings, List<ScanFilter> filters) {

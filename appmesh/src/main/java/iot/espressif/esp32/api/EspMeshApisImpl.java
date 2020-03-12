@@ -1,6 +1,7 @@
 package iot.espressif.esp32.api;
 
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.le.ScanFilter;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -27,8 +28,8 @@ import meshblufi.espressif.params.BlufiConfigureParams;
 
 class EspMeshApisImpl extends EspMeshApis {
     @Override
-    public void startScanMeshBleDevice(@NonNull MeshScanListener listener) {
-        EspBleUtils.startScanBle(listener);
+    public void startScanMeshBleDevice(@NonNull MeshScanListener listener, List<ScanFilter> filters) {
+        EspBleUtils.startScanBle(listener,filters);
     }
 
     @Override

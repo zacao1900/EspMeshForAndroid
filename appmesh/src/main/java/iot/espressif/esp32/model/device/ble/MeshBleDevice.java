@@ -28,6 +28,12 @@ public class MeshBleDevice implements IMeshBleDevice {
 
     private String mOUI;
 
+    private String CID;//新加的适配北京平台的字段
+    private String MID;
+    private String PID;
+    private String ability;
+    private String BleProVersion;
+
     public MeshBleDevice(BluetoothDevice device, int rssi, byte[] scanRecord) {
         this(device, rssi, scanRecord, 0);
     }
@@ -116,11 +122,32 @@ public class MeshBleDevice implements IMeshBleDevice {
 
     private void parseMesh() {
         try {
-            _parseMeshVersion();
+//            _parseMeshVersion();
+            parseMeshVersion();
         } catch (Exception e) {
             e.printStackTrace();
             initVars();
         }
+    }
+
+    /**
+     * 新加的
+     */
+    private void parseMeshVersion(){
+        List<BleAdvData> dataList = EspBleUtils.resolveScanRecord(mScanRecord);
+        for (BleAdvData advData : dataList) {
+            byte[] manuData = advData.getData();
+            CID= byte2Hex(manuData[1])+byte2Hex(manuData[0]);
+            MID=byte2Hex(manuData[2]);
+            PID=byte2Hex(manuData[3]);
+            mStaBssid= byte2Hex(manuData[4])+byte2Hex(manuData[5])+byte2Hex(manuData[6])+byte2Hex(manuData[7])+byte2Hex(manuData[8])+byte2Hex(manuData[9]);
+            ability=byte2Hex(manuData[10]);
+            BleProVersion=byte2Hex(manuData[11]);
+        }
+    }
+    private String byte2Hex(byte data){
+        String str=Integer.toHexString(data<0?data&0xff:data);
+       return str;
     }
 
     private void _parseMeshVersion() {
@@ -166,5 +193,45 @@ public class MeshBleDevice implements IMeshBleDevice {
         }
 
         initVars();
+    }
+
+    public String getCID() {
+        return CID;
+    }
+
+    public void setCID(String CID) {
+        this.CID = CID;
+    }
+
+    public String getMID() {
+        return MID;
+    }
+
+    public void setMID(String MID) {
+        this.MID = MID;
+    }
+
+    public String getPID() {
+        return PID;
+    }
+
+    public void setPID(String PID) {
+        this.PID = PID;
+    }
+
+    public String getAbility() {
+        return ability;
+    }
+
+    public void setAbility(String ability) {
+        this.ability = ability;
+    }
+
+    public String getBleProVersion() {
+        return BleProVersion;
+    }
+
+    public void setBleProVersion(String bleProVersion) {
+        BleProVersion = bleProVersion;
     }
 }

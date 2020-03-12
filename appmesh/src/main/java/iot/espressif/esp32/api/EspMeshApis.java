@@ -2,6 +2,7 @@ package iot.espressif.esp32.api;
 
 import android.bluetooth.BluetoothDevice;
 
+import android.bluetooth.le.ScanFilter;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -48,8 +49,10 @@ public abstract class EspMeshApis {
      * Starts a scan for Mesh BLE devices.
      *
      * @param listener the callback Mesh BLE device scan results are delivered.
+     * @param filters  {@link ScanFilter}s for finding exact BLE devices.
+     *
      */
-    abstract public void startScanMeshBleDevice(@NonNull MeshScanListener listener);
+    abstract public void startScanMeshBleDevice(@NonNull MeshScanListener listener, List<ScanFilter> filters);
 
     /**
      * Stops an ongoing Mesh BLE device scan.

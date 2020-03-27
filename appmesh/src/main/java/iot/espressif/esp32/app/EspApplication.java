@@ -9,11 +9,9 @@ import android.content.pm.PackageManager;
 import android.os.Environment;
 import android.support.v4.content.LocalBroadcastManager;
 
-
 import java.util.HashMap;
 import java.util.Random;
 
-import iot.espressif.esp32.db.box.MeshObjectBox;
 import libs.espressif.utils.RandomUtil;
 
 public class EspApplication {
@@ -40,11 +38,11 @@ public class EspApplication {
 
         mSupportBLE = applicationInstance.getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE);
 
-        MeshObjectBox.getInstance().init(applicationInstance);
+//        MeshObjectBox.getInstance().init(applicationInstance);
     }
 
     private void release() {
-        MeshObjectBox.getInstance().close();
+//        MeshObjectBox.getInstance().close();
 
         mCacheMap.clear();
         mCacheMap = null;

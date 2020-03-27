@@ -8,7 +8,6 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
-import iot.espressif.esp32.db.model.DeviceDB;
 import iot.espressif.esp32.model.device.properties.EspDeviceState;
 import iot.espressif.esp32.model.net.MeshNode;
 
@@ -44,7 +43,7 @@ public final class EspDeviceFactory {
         return result;
     }
 
-    public static IEspDevice parseDeviceDB(DeviceDB db) {
+  /*  public static IEspDevice parseDeviceDB(DeviceDB db) {
         IEspDevice device = new EspDevice();
         device.setId(db.id);
         device.setMac(db.mac);
@@ -76,5 +75,5 @@ public final class EspDeviceFactory {
 
 
         return device;
-    }
+    }*/
 }

@@ -4,27 +4,25 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import iot.espressif.esp32.db.box.MeshObjectBox;
-import iot.espressif.esp32.db.model.GroupDB;
 import iot.espressif.esp32.model.device.IEspDevice;
 import iot.espressif.esp32.model.group.EspGroupFactory;
 import iot.espressif.esp32.model.group.IEspGroup;
 import iot.espressif.esp32.model.user.EspUser;
 
 public class EspActionGroup implements IEspActionGroup {
-    private MeshObjectBox mObjectBox = MeshObjectBox.getInstance();
+//    private MeshObjectBox mObjectBox = MeshObjectBox.getInstance();
 
     @Override
     public List<IEspGroup> doActionLoadGroups() {
-        List<GroupDB> groupDBs = mObjectBox.group().loadAllGroups();
+//        List<GroupDB> groupDBs = mObjectBox.group().loadAllGroups();
 
-        List<IEspGroup> result = new ArrayList<>(groupDBs.size());
+      /*  List<IEspGroup> result = new ArrayList<>(groupDBs.size());
         for (GroupDB groupDB : groupDBs) {
             IEspGroup group = EspGroupFactory.parseGroupDB(groupDB);
             result.add(group);
-        }
+        }*/
 
-        return result;
+        return new ArrayList<>();
     }
 
     @Override
@@ -59,7 +57,8 @@ public class EspActionGroup implements IEspActionGroup {
             }
         }
 
-        long groupId = mObjectBox.group().saveGroup(group, deviceIds);
+//        long groupId = mObjectBox.group().saveGroup(group, deviceIds);
+        long groupId = 0;
         if (newGroup) {
             group.setId(groupId);
             user.addGroup(group);
@@ -70,7 +69,7 @@ public class EspActionGroup implements IEspActionGroup {
 
     @Override
     public void doActionDeleteGroup(long id) {
-        mObjectBox.group().deleteGroup(id);
+//        mObjectBox.group().deleteGroup(id);
         EspUser.INSTANCE.deleteGroup(id);
     }
 }

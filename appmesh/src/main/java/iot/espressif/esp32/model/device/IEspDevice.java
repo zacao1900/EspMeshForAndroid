@@ -4,7 +4,6 @@ import java.net.InetAddress;
 import java.util.Collection;
 import java.util.List;
 
-import javax.annotation.Nonnull;
 
 import iot.espressif.esp32.model.device.properties.EspDeviceCharacteristic;
 import iot.espressif.esp32.model.device.properties.EspDeviceState;
@@ -329,7 +328,6 @@ public interface IEspDevice {
 
     void setGroups(Collection<String> groupIds);
 
-    @Nonnull
     Collection<String> getGroupIds();
 
     boolean isInGroup(String groupId);

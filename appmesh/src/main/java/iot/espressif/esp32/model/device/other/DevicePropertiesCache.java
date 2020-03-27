@@ -7,8 +7,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import iot.espressif.esp32.db.box.MeshObjectBox;
-import iot.espressif.esp32.db.model.DeviceDB;
+/*import iot.espressif.esp32.db.box.MeshObjectBox;
+import iot.espressif.esp32.db.model.DeviceDB;*/
 import iot.espressif.esp32.model.device.IEspDevice;
 import iot.espressif.esp32.model.device.properties.EspDeviceCharacteristic;
 
@@ -16,15 +16,15 @@ public class DevicePropertiesCache {
     // Key=tid, Value=EspDeviceCharacteristic
     private SparseArray<PropertiesModel> PropertiesModels;
     // Key=DeviceMac, Value=DeviceDB
-    private Map<String, DeviceDB> mMacDeviceDBMap;
+//    private Map<String, DeviceDB> mMacDeviceDBMap;
 
     public DevicePropertiesCache() {
         PropertiesModels = getAssetCharacteristicMap();
-        mMacDeviceDBMap = getMacDeviceDBMap();
+//        mMacDeviceDBMap = getMacDeviceDBMap();
     }
 
     public void setPropertiesIfCache(IEspDevice device) {
-        DeviceDB db = mMacDeviceDBMap.get(device.getMac());
+       /* DeviceDB db = mMacDeviceDBMap.get(device.getMac());
         if (db != null) {
             device.setName(db.name);
             device.setDeviceTypeId(db.tid);
@@ -41,7 +41,7 @@ public class DevicePropertiesCache {
                     device.addOrReplaceCharacteristic(c.cloneInstance());
                 }
             }
-        }
+        }*/
     }
 
     private SparseArray<PropertiesModel> getAssetCharacteristicMap() {
@@ -59,7 +59,7 @@ public class DevicePropertiesCache {
         return result;
     }
 
-    private Map<String, DeviceDB> getMacDeviceDBMap() {
+  /*  private Map<String, DeviceDB> getMacDeviceDBMap() {
         Map<String, DeviceDB> result = new HashMap<>();
 
         List<DeviceDB> deviceDBList = MeshObjectBox.getInstance().device().loadAllDevices();
@@ -67,7 +67,7 @@ public class DevicePropertiesCache {
             result.put(db.mac, db);
         }
         return result;
-    }
+    }*/
 
     private EspDeviceCharacteristic getCharcteristic(String cid, String name, String format, int perms, Number min, Number max, Number step) {
         EspDeviceCharacteristic characteristic = EspDeviceCharacteristic.newInstance(format);

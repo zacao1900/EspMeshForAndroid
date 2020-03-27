@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
 
 import libs.espressif.function.EspConsumer;
 import libs.espressif.function.EspFunction;
@@ -13,7 +12,7 @@ import libs.espressif.function.EspFunction;
 public class EspCollection<E> implements Collection<E> {
     private final Collection<E> mImpl;
 
-    public EspCollection(@Nonnull Collection<E> collection) {
+    public EspCollection( Collection<E> collection) {
         mImpl = collection;
     }
 
@@ -32,7 +31,7 @@ public class EspCollection<E> implements Collection<E> {
         return mImpl.contains(o);
     }
 
-    @Nonnull
+    
     @Override
     public Iterator<E> iterator() {
         return mImpl.iterator();
@@ -59,22 +58,22 @@ public class EspCollection<E> implements Collection<E> {
     }
 
     @Override
-    public boolean containsAll(@Nonnull Collection<?> c) {
+    public boolean containsAll( Collection<?> c) {
         return mImpl.containsAll(c);
     }
 
     @Override
-    public boolean addAll(@Nonnull Collection<? extends E> c) {
+    public boolean addAll( Collection<? extends E> c) {
         return mImpl.addAll(c);
     }
 
     @Override
-    public boolean removeAll(@Nonnull Collection<?> c) {
+    public boolean removeAll( Collection<?> c) {
         return mImpl.removeAll(c);
     }
 
     @Override
-    public boolean retainAll(@Nonnull Collection<?> c) {
+    public boolean retainAll( Collection<?> c) {
         return mImpl.retainAll(c);
     }
 

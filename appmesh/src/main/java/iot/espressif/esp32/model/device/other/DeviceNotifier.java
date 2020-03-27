@@ -7,7 +7,6 @@ import android.arch.lifecycle.OnLifecycleEvent;
 import android.content.Context;
 import android.text.TextUtils;
 
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -29,7 +28,6 @@ import io.reactivex.schedulers.Schedulers;
 import iot.espressif.esp32.action.device.EspActionDeviceInfo;
 import iot.espressif.esp32.action.device.EspActionDeviceSniffer;
 import iot.espressif.esp32.action.device.EspActionDeviceTopology;
-import iot.espressif.esp32.db.box.MeshObjectBox;
 import iot.espressif.esp32.model.device.EspDeviceFactory;
 import iot.espressif.esp32.model.device.IEspDevice;
 import iot.espressif.esp32.model.device.properties.EspDeviceState;
@@ -407,7 +405,7 @@ public abstract class DeviceNotifier implements IDeviceNotifier, LifecycleObserv
                     org = macOrgMap.get(sr.getBssid().substring(0, 6));
                 }
                 sr.setOrganization(org);
-                MeshObjectBox.getInstance().sniffer().saveSniffer(sr);
+//                MeshObjectBox.getInstance().sniffer().saveSniffer(sr);
             }
 
             listenedSnifferDiscovered(querySnifferList);

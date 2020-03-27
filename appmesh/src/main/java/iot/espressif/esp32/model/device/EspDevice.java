@@ -13,7 +13,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import javax.annotation.Nonnull;
 
 import iot.espressif.esp32.model.device.properties.EspDeviceCharacteristic;
 import iot.espressif.esp32.model.device.properties.EspDeviceState;
@@ -324,7 +323,6 @@ class EspDevice implements IEspDevice {
         return mTrigger;
     }
 
-    @Nonnull
     @Override
     public Collection<String> getGroupIds() {
         synchronized (mGroups) {

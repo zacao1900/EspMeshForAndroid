@@ -5,9 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import libs.espressif.function.EspBiConsumer;
 
 public class EspMap<K, V> implements Map<K, V> {
@@ -17,7 +14,7 @@ public class EspMap<K, V> implements Map<K, V> {
         this(new HashMap<>());
     }
 
-    public EspMap(@Nonnull Map<K, V> map) {
+    public EspMap( Map<K, V> map) {
         mImpl = map;
     }
 
@@ -32,35 +29,35 @@ public class EspMap<K, V> implements Map<K, V> {
     }
 
     @Override
-    public boolean containsKey(@Nullable Object key) {
+    public boolean containsKey( Object key) {
         return mImpl.containsKey(key);
     }
 
     @Override
-    public boolean containsValue(@Nullable Object value) {
+    public boolean containsValue( Object value) {
         return mImpl.containsValue(value);
     }
 
-    @Nullable
+    
     @Override
-    public V get(@Nullable Object key) {
+    public V get( Object key) {
         return mImpl.get(key);
     }
 
-    @Nullable
+    
     @Override
-    public V put(@Nonnull K key, @Nonnull V value) {
+    public V put( K key,  V value) {
         return mImpl.put(key, value);
     }
 
-    @Nullable
+    
     @Override
-    public V remove(@Nullable Object key) {
+    public V remove( Object key) {
         return mImpl.remove(key);
     }
 
     @Override
-    public void putAll(@Nonnull Map<? extends K, ? extends V> m) {
+    public void putAll( Map<? extends K, ? extends V> m) {
         mImpl.putAll(m);
     }
 
@@ -69,19 +66,19 @@ public class EspMap<K, V> implements Map<K, V> {
         mImpl.clear();
     }
 
-    @Nonnull
+    
     @Override
     public Set<K> keySet() {
         return mImpl.keySet();
     }
 
-    @Nonnull
+    
     @Override
     public Collection<V> values() {
         return mImpl.values();
     }
 
-    @Nonnull
+    
     @Override
     public Set<Entry<K, V>> entrySet() {
         return mImpl.entrySet();

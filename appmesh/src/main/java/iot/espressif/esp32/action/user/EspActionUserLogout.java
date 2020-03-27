@@ -1,6 +1,6 @@
 package iot.espressif.esp32.action.user;
 
-import iot.espressif.esp32.db.box.MeshObjectBox;
+//import iot.espressif.esp32.db.box.MeshObjectBox;
 import iot.espressif.esp32.model.user.EspUser;
 
 public class EspActionUserLogout implements IEspActionUserLogout {
@@ -11,8 +11,8 @@ public class EspActionUserLogout implements IEspActionUserLogout {
             return;
         }
 
-        MeshObjectBox dbManager = MeshObjectBox.getInstance();
-        dbManager.user().removeLastLoginUser();
+      /*  MeshObjectBox dbManager = MeshObjectBox.getInstance();
+        dbManager.user().removeLastLoginUser();*/
 
         user.setEmail(null);
         user.setName(null);

@@ -4,9 +4,6 @@ import android.support.annotation.NonNull;
 
 import java.util.Collection;
 
-import iot.espressif.esp32.db.model.DeviceDB;
-import iot.espressif.esp32.db.model.GroupDB;
-
 public class EspGroupFactory {
     public static IEspGroup newGroup(long id, @NonNull String name, boolean isUser, boolean isMesh,
                                      Collection<String> deviceBssids) {
@@ -22,7 +19,7 @@ public class EspGroupFactory {
         return group;
     }
 
-    public static IEspGroup parseGroupDB(GroupDB groupDB) {
+   /* public static IEspGroup parseGroupDB(GroupDB groupDB) {
         EspGroup group = new EspGroup();
         group.setId(groupDB.id);
         group.setName(groupDB.name);
@@ -34,5 +31,5 @@ public class EspGroupFactory {
         }
 
         return group;
-    }
+    }*/
 }

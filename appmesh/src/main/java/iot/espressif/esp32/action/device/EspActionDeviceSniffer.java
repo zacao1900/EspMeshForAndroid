@@ -9,8 +9,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import iot.espressif.esp32.db.box.MeshObjectBox;
-import iot.espressif.esp32.db.model.SnifferDB;
+/*import iot.espressif.esp32.db.box.MeshObjectBox;
+import iot.espressif.esp32.db.model.SnifferDB;*/
 import iot.espressif.esp32.model.device.IEspDevice;
 import iot.espressif.esp32.model.device.other.Sniffer;
 import iot.espressif.esp32.utils.DeviceUtil;
@@ -26,7 +26,7 @@ public class EspActionDeviceSniffer implements IEspActionDeviceSniffer {
 
     @Override
     public List<Sniffer> doActionLoadSnifferDB() {
-        List<SnifferDB> snifferDBs = MeshObjectBox.getInstance().sniffer().loadAllSniffers();
+       /* List<SnifferDB> snifferDBs = MeshObjectBox.getInstance().sniffer().loadAllSniffers();
         List<Sniffer> result = new ArrayList<>(snifferDBs.size());
         for (SnifferDB db : snifferDBs) {
             Sniffer sniffer = new Sniffer();
@@ -42,8 +42,8 @@ public class EspActionDeviceSniffer implements IEspActionDeviceSniffer {
 
             result.add(sniffer);
         }
-
-        return result;
+*/
+        return  new ArrayList();
     }
 
     @Override

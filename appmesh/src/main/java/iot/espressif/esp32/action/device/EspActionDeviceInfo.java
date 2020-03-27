@@ -14,7 +14,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import iot.espressif.esp32.db.box.MeshObjectBox;
 import iot.espressif.esp32.model.device.IEspDevice;
 import iot.espressif.esp32.model.device.properties.EspDeviceCharacteristic;
 import iot.espressif.esp32.model.device.properties.EspDeviceState;
@@ -114,7 +113,8 @@ public class EspActionDeviceInfo implements IEspActionDeviceInfo {
                     break;
             }
 
-            long id = MeshObjectBox.getInstance().device().saveDevice(device);
+//            long id = MeshObjectBox.getInstance().device().saveDevice(device);
+            long id =0;
             device.setId(id);
             return true;
         } catch (JSONException e) {

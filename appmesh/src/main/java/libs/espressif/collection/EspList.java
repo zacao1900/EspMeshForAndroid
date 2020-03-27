@@ -5,9 +5,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.ListIterator;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import libs.espressif.function.EspBoolFunction;
 
 public class EspList<E> extends EspCollection<E> implements List<E> {
@@ -17,13 +14,13 @@ public class EspList<E> extends EspCollection<E> implements List<E> {
         this(new ArrayList<>());
     }
 
-    public EspList(@Nonnull List<E> list) {
+    public EspList( List<E> list) {
         super(list);
         mImpl = list;
     }
 
     @Override
-    public boolean addAll(int index, @Nonnull Collection<? extends E> c) {
+    public boolean addAll(int index,  Collection<? extends E> c) {
         return mImpl.addAll(index, c);
     }
 
@@ -48,7 +45,7 @@ public class EspList<E> extends EspCollection<E> implements List<E> {
     }
 
     @Override
-    public int indexOf(@Nullable Object o) {
+    public int indexOf( Object o) {
         return mImpl.indexOf(o);
     }
 
@@ -57,23 +54,23 @@ public class EspList<E> extends EspCollection<E> implements List<E> {
     }
 
     @Override
-    public int lastIndexOf(@Nullable Object o) {
+    public int lastIndexOf( Object o) {
         return mImpl.lastIndexOf(o);
     }
 
-    @Nonnull
+    
     @Override
     public ListIterator<E> listIterator() {
         return mImpl.listIterator();
     }
 
-    @Nonnull
+    
     @Override
     public ListIterator<E> listIterator(int index) {
         return mImpl.listIterator(index);
     }
 
-    @Nonnull
+    
     @Override
     public List<E> subList(int fromIndex, int toIndex) {
         return mImpl.subList(fromIndex, toIndex);

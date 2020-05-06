@@ -136,16 +136,18 @@ public class MeshBleDevice implements IMeshBleDevice {
     private void parseMeshVersion(){
         List<BleAdvData> dataList = EspBleUtils.resolveScanRecord(mScanRecord);
         for (BleAdvData advData : dataList) {
-            byte[] manuData = advData.getData();
-            if(manuData.length<12){
-                continue;
+            if(advData.getType()==255){
+                byte[] manuData = advData.getData();
+                if(manuData.length<12){
+                    continue;
+                }
+                CID= byte2Hex(manuData[1])+byte2Hex(manuData[0]);
+                MID=byte2Hex(manuData[2]);
+                PID=byte2Hex(manuData[3]);
+                mStaBssid= byte2Hex(manuData[4])+byte2Hex(manuData[5])+byte2Hex(manuData[6])+byte2Hex(manuData[7])+byte2Hex(manuData[8])+byte2Hex(manuData[9]);
+                ability=byte2Hex(manuData[10]);
+                BleProVersion=byte2Hex(manuData[11]);
             }
-            CID= byte2Hex(manuData[1])+byte2Hex(manuData[0]);
-            MID=byte2Hex(manuData[2]);
-            PID=byte2Hex(manuData[3]);
-            mStaBssid= byte2Hex(manuData[4])+byte2Hex(manuData[5])+byte2Hex(manuData[6])+byte2Hex(manuData[7])+byte2Hex(manuData[8])+byte2Hex(manuData[9]);
-            ability=byte2Hex(manuData[10]);
-            BleProVersion=byte2Hex(manuData[11]);
         }
     }
     private String byte2Hex(byte data){

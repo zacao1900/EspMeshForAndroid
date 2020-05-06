@@ -178,7 +178,8 @@ public class EspHttpUtils {
         if (connection == null) {
             return null;
         }
-
+        //防止http数据发送失败
+        connection.addRequestProperty("Connection", "close");
         if (!requireResponse) {
             connection.setReadTimeout(TIMEOUT_NO_RESPONSE);
         }

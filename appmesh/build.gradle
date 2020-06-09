@@ -51,4 +51,6 @@ dependencies {
     implementation lib.rxandroid
     implementation lib.jmdns
     implementation lib.eventbus
+    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
+    implementation 'androidx.core:core:1.3.0'
 }

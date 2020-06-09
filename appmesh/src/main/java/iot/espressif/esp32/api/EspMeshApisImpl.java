@@ -2,8 +2,8 @@ package iot.espressif.esp32.api;
 
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.le.ScanFilter;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.text.TextUtils;
 
 
